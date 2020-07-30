@@ -1,0 +1,378 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Lab</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0px;
+            overflow: hidden;
+            font-family: 微軟正黑體;
+        }
+
+        body {
+            background-color: lightgray;
+        }
+
+        img {
+            width: 60px;
+            height: 60px;
+            object-fit: cover;
+
+        }
+
+        div {
+            box-sizing: border-box;
+        }
+
+        #imgSrcArea img,
+        button {
+            cursor: pointer;
+            margin: 2px;
+        }
+
+        #imgSrcArea img:hover {
+            transform: scale(1.1);
+        }
+
+        label {
+            position: relative;
+        }
+
+        #uploadFile {
+            position: absolute;
+            left: 0;
+            top: 0;
+            opacity: 0;
+        }
+
+        .customersizeArea {
+            font-size: small;
+        }
+    </style>
+</head>
+
+<body>
+
+
+    <!-- <div>
+        <a id="bg1" href="#">Download</a>
+    </div> -->
+    <div class="container">
+        <div class="row">
+            <div class="col-12 text-center d-flex mb-4">
+                <h1 class="m-auto">當個長輩吧~長輩Style~</h1>
+
+            </div>
+
+            <!-- canvas area & btn-->
+            <div class="col-6 text-center">
+                <div>
+                    <button id="reNewBtn" class="btn btn-primary">隨機生成</button>
+                    <a href="#" id="downLoad" download=""><button class="btn btn-success">下載</button></a>
+                </div>
+                <canvas id="myCanvas" class="my-2" width="480" height="400" style="border:1px solid #000000;"></canvas>
+            </div>
+            <!-- /canvas area & btn-->
+
+
+            <!-- customized -->
+            <div class="col-6">
+                <div class=" text-center d-flex pr-2">
+                    <h3>客製化專區</h3>
+
+                    <button type="button" class="btn btn-outline-info btn-sm ml-auto mr-5" data-toggle="modal"
+                        data-target="#exampleModal">
+                        說明
+                    </button>
+                </div>
+
+                <!-- image Src -->
+                <h5> 步驟一: 選擇圖片</h5>
+                <div id="imgSrcArea" class="ml-3">
+                    <img id="bg1" src="img/bg1.jpg" />
+                    <img id="bg2" src="img/bg2.jpg" />
+                    <img id="bg3" src="img/bg3.jpg" />
+                    <img id="bg4" src="img/bg4.jpg" />
+                    <img id="bg5" src="img/bg5.jpg" />
+                    <img id="bg6" src="img/bg6.jpg" />
+                    <img id="bg7" src="img/bg7.jpg" />
+                    <img id="bg8" src="img/bg8.jpg" />
+                    <img id="bg9" src="img/bg9.jpg" />
+                    <img id="bg10" src="img/bg10.jpg" />
+                    <img id="bg11" src="img/bg11.jpg" />
+                    <img id="bg12" src="img/bg12.jpg" />
+                    <br>
+
+                    <label for="fileinp">
+                        <input type="button" class="btn btn-success mt-1" name="myfile" accept="image/*"
+                            value="上傳"><span id="fileAddress"></span>
+                        <input type="file" value="" id="uploadFile">
+                    </label>
+
+                </div>
+                <!-- /image Src -->
+
+
+                <div class="d-flex">
+                    <h5> 步驟二: 輸入文字並選擇字體大小/顏色/位置(滑鼠拖曳)</h5>
+
+                </div>
+                <div id="customersizeAreaAll" class="m-auto">
+                    <div class="d-flex customersizeArea">
+                        <div class="col-4 d-flex">
+                            <input type="text" class="myText form-control" placeholder="文字1">
+                        </div>
+                        <div class="col-4">
+                            <input class="myFontSize" name="myFontSize" type="range" min="16" max="100" step="1"
+                                value="48">
+                            <div> 字體大小: 48px</div>
+                        </div>
+                        <div>
+                            <input class="colorRange" name="colorRange" type="color" value="#d2e015">
+                            <div>字體顏色</div>
+                        </div>
+                    </div>
+                </div>
+                <button id="addBtn" class="btn btn-secondary btn-sm ml-3">新增文字</button>
+            </div>
+
+            <!-- /customized -->
+
+            <div id="newArea">
+
+            </div>
+            <!-- text hide area-->
+            <div class="d-none" id="textArea">
+                <span>早安~</span>
+                <span>保持心情愉快，事事順心。</span>
+                <span>在非洲，每60秒就有一分鐘過去了。</span>
+                <span>親愛的朋友，祝福你平安喜樂。</span>
+                <span>把快樂和問候，輕輕送給你</span>
+                <span>祝有美好的一天。</span>
+                <span>健康快樂。</span>
+                <span>午安~</span>
+                <span>6666~~</span>
+                <span>養生之道，心平~氣和~</span>
+                <span>太陽露面時就是希望的開始~</span>
+                <span>平安每一天~</span>
+                <span>園長快樂~</span>
+            </div>
+            <!-- /text hide area-->
+
+
+            <!-- Modal -->
+            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">說明</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <span>-懶人可直接點選一鍵生成，文字及圖片各自隨機配對。</span><br>
+                            <span>-提供客製化，點選圖片後輸入文字，自由改變樣式。</span><br>
+                            <span>-完成後快速下載，轟炸你的爸爸媽媽爺爺奶奶叔叔阿姨吧!</span>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">離開</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <script>
+
+        window.onload = init;
+
+        function init() {
+            var c = document.getElementById("myCanvas");
+            var ctx = c.getContext("2d");
+            var textOnCount;
+
+            // renew at beginning
+            function renew() {
+                getRadomImg();
+                getRandomText();
+                downLoad.href = myCanvas.toDataURL("image/png");
+            }
+            renew();
+
+
+            // change upload btn style
+            $("#uploadFile").change(function () {
+                $("#fileAddress").html($("#uploadFile").val());
+            })
+
+
+            // function get random Image
+            function getRadomImg() {
+                var imgCount = $("#imgSrcArea img").length;
+                var randomPicNum = Math.floor(Math.random() * imgCount + 1);
+                ctx.drawImage($(`#imgSrcArea :nth-of-type(${randomPicNum})`)[0], 0, 0, 480, 400);
+            }
+
+            // funtion get random text
+            function getRandomText() {
+                ctx.font = "48px Arial italic";
+                ctx.textBaseline = "top";
+                ctx.textAlign = "left";
+                ctx.fillStyle = "yellow";
+                var textCount = $("#textArea span").length;
+                var randomTextNum = Math.floor(Math.random() * textCount + 1)
+                ctx.fillText($(`#textArea :nth-of-type(${randomTextNum})`).text(), 0, 5, 480);
+
+            }
+
+
+            // add btn click function to renew img and text
+            $("#reNewBtn").click(function () {
+                renew()
+            });
+
+
+            //  *******************cutstomersize*******************
+            // change to selected picture and mark selected pic
+            var imgData;
+
+            $("#imgSrcArea").on("click", "img", function () {
+                ctx.drawImage($(this)[0], 0, 0, 480, 400);
+                imgData = $(this)[0];
+                drawText();
+                $("#imgSrcArea img").removeAttr("style");
+                $(this).css("border", "red 3px solid");
+                downLoad.href = myCanvas.toDataURL("image/png");
+            });
+
+
+            // upload picture
+            $("#uploadFile").change(function () {
+                var input = this;
+                if (input.files && input.files[0]) {
+                    var reader = new FileReader();
+                    reader.onload = function (e) {
+                        $("#imgSrcArea img:last-of-type").after('<img src="" />');
+                        $("#imgSrcArea img:last-of-type").attr('src', e.target.result);
+                        setTimeout(() => {
+                            ctx.drawImage($("#imgSrcArea img:last-of-type")[0], 0, 0, 480, 400);
+                            imgData = $("#imgSrcArea img:last-of-type")[0];
+                        }, 150);
+
+                    }
+                    reader.readAsDataURL(input.files[0]);
+                }
+
+            });
+
+
+            // font size customersize
+            $('#customersizeAreaAll').on("input", ".myFontSize", function () {
+                $(this).next().html("字體大小: " + $(this).val() + "px");
+            });
+
+
+            // font text customersize
+            var textLocation = [
+                { tx: 10, ty: 10 },
+                { tx: 10, ty: 150 },
+                { tx: 10, ty: 300 }
+            ]
+            // draw text
+            function drawText() {
+                for (var i = 1; i <= textOnCount; i++) {
+                    ctx.font = $(`.customersizeArea:nth-of-type(${i}) .myFontSize`).val() + "px Arial";
+                    ctx.textBaseline = "top";
+                    ctx.textAlign = "left";
+                    ctx.fillStyle = $(`.customersizeArea:nth-of-type(${i}) .colorRange`).val();
+                    ctx.fillText($(`.customersizeArea:nth-of-type(${i}) .myText`).val(), textLocation[i - 1]["tx"], textLocation[i - 1]["ty"], 480);
+                }
+                downLoad.href = myCanvas.toDataURL("image/png");
+            }
+
+
+            // change content and style on time
+            $('#customersizeAreaAll').on("input", "input", function () {
+                if (!imgData) {
+                    alert("請先選擇客製化圖片");
+                    return;
+                }
+                // console.log($(this).val())
+                ctx.drawImage(imgData, 0, 0, 480, 400);
+                textOnCount = $(".customersizeArea").length;
+                console.log(textOnCount);
+                drawText()
+            });
+
+
+            // add new textItem
+            var i = 2;
+            $("#addBtn").on("click", function () {
+                var newContent = `<div class="d-flex customersizeArea"><div class="col-4 d-flex"><input  type="text" class="myText form-control" placeholder="文字${i}"></div><div class="col-4"><input class="myFontSize" name="myFontSize" type="range" min="16" max="100" step="1" value="48"><div> 字體大小: 48px</div></div><div><input class="colorRange" name="colorRange" type="color" value="#d2e015"><div>字體顏色</div></div></div>`
+                $(".customersizeArea:last-of-type").after(newContent);
+                i++;
+                if (i > 3) {
+                    $("#addBtn").hide()
+                }
+            })
+
+
+            // *******************mouse relative event*******************
+
+
+            var dragFlag = 0;  // judge if mouseDown
+
+            // mouseDown & mouseUp
+            $("#myCanvas").mousedown(function () {
+                dragFlag = 1;
+            });
+
+            $("#myCanvas").mouseup(function () {
+                dragFlag = 0;
+            });
+
+            // Drag text
+    
+            $("#myCanvas").mousemove(function (e) {
+                if (dragFlag) {
+                    console.log(e.offsetX, e.offsetY);
+                    if (e.offsetY > textLocation[0]["ty"] && e.offsetY < textLocation[0]["ty"] + 48) {
+                        ctx.drawImage(imgData, 0, 0, 480, 400);
+                        textLocation[0]["tx"] = e.offsetX - 50;
+                        textLocation[0]["ty"] = e.offsetY - 24;
+                        drawText();
+                    } else if (e.offsetY > textLocation[1]["ty"] && e.offsetY < textLocation[1]["ty"] + 48) {
+                        ctx.drawImage(imgData, 0, 0, 480, 400);
+                        textLocation[1]["tx"] = e.offsetX - 50;
+                        textLocation[1]["ty"] = e.offsetY - 24;
+                        drawText();
+                    } else if (e.offsetY > textLocation[2]["ty"] && e.offsetY < textLocation[2]["ty"] + 48) {
+                        ctx.drawImage(imgData, 0, 0, 480, 400);
+                        textLocation[2]["tx"] = e.offsetX - 50;
+                        textLocation[2]["ty"] = e.offsetY - 24;
+                        drawText();
+                    }
+                }
+            });
+
+
+        }
+
+    </script>
+
+</body>
+
+</html>
